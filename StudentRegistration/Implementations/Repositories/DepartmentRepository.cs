@@ -37,7 +37,7 @@ public class DepartmentRepository : IDepartmentRepository
         return department;
     }
 
-    public async Task<Department> GetDepartentById(Guid departmentId)
+    public async Task<Department> GetDepartmentById(Guid departmentId)
     {
         return await _studentContext.Departments.FindAsync(departmentId);
     }
