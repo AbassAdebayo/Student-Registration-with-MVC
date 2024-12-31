@@ -16,6 +16,7 @@ public class StudentDto
     public string MatricNumber { get; set; }
     public Guid DepartmentId { get; set; }
     public Department Department { get; set; }
+    public DateTime DateOfCreation { get; set; }
 }
 
 public class CreateStudentRequestModel
@@ -42,9 +43,6 @@ public class CreateStudentRequestModel
     
     [Required]
     public string Address { get; set; }
-    
-    [Required]
-    public Guid DepartmentId { get; set; }
     
 }
 

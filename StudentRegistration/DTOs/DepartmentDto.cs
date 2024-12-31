@@ -8,6 +8,7 @@ public class DepartmentDto
     public string DepartmentName { get; set; }
     public string DepartmentCode { get; set; }
     public ICollection<StudentDto> Students { get; set; } = new List<StudentDto>();
+    public DateTime DateOfCreation { get; set; }
 }
 
 public class CreateDepartmentRequestModel
