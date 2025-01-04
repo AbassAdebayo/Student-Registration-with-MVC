@@ -9,4 +9,5 @@ public interface IDepartmentRepository
     Task<Department> EditDepartment(Department department);
     public Task<Department> GetDepartmentById(Guid departmentId);
     public Task<IList<Department>> GetAllDepartments();
+    public Task<bool> DepartmentExistsByName(string departmentName);
 }

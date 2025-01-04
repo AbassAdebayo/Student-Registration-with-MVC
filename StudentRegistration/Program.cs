@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using StudentRegistration.Implementations.Repositories;
+using StudentRegistration.Implementations.Services;
+using StudentRegistration.Interfaces.Repositories;
+using StudentRegistration.Interfaces.Services;
 using StudentRegistration.StudentDbContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +12,11 @@ builder.Services.AddDbContext<StudentContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("StudentContext"),
         new MySqlServerVersion(new Version(7, 0, 22))
         ));
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

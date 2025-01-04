@@ -51,4 +51,9 @@ public class DepartmentRepository : IDepartmentRepository
 
         return departmentsWithStudents;
     }
+
+    public async Task<bool> DepartmentExistsByName(string departmentName)
+    {
+        return await _studentContext.Departments.AnyAsync(dpt => dpt.DepartmentName == departmentName);
+    }
 }

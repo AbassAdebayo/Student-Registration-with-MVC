@@ -25,6 +25,9 @@ namespace StudentRegistration.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("DepartmentCode")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -32,6 +35,9 @@ namespace StudentRegistration.Migrations
                     b.Property<string>("DepartmentName")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("StudentCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -47,6 +53,9 @@ namespace StudentRegistration.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("char(36)");

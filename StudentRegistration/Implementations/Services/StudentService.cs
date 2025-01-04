@@ -28,7 +28,7 @@ public class StudentService : IStudentService
         }
         
         var studentExist = await _studentRepository.StudentExistsByEmail(model.Email);
-        if (studentExist)
+        if(studentExist)
         {
             return new BaseResponse<bool>
             {
@@ -170,12 +170,65 @@ public class StudentService : IStudentService
 
     public async Task<BaseResponse<IList<StudentDto>>> GetAllStudents()
     {
-        throw new NotImplementedException();
+        var students = await _studentRepository.GetAllStudents();
+        if (students is null || !students.Any())
+        {
+            return new BaseResponse<IList<StudentDto>>
+            {
+                Message = "Students are empty!",
+                Status = false
+            };
+        }
+
+        var studentsDto = students.Select(std => new StudentDto
+        {
+            Id = std.Id,
+            FirstName = std.FullName,
+            Email = std.Email,
+            DepartmentId = std.DepartmentId,
+            MatricNumber = std.MatricNumber,
+            DateOfCreation = std.DateOfCreation,
+
+        }).ToList();
+
+        return new BaseResponse<IList<StudentDto>>
+        {
+            Message = "Students successfully fetched!",
+            Status = true,
+            Data = studentsDto
+        };
+
     }
 
     public async Task<BaseResponse<IList<StudentDto>>> GetStudentsByDepartmentId(Guid departmentId)
     {
-        throw new NotImplementedException();
+        var studentsByDepartment = await _studentRepository.GetStudentsByDepartmentId(departmentId);
+        if (studentsByDepartment is null || !studentsByDepartment.Any())
+        {
+            return new BaseResponse<IList<StudentDto>>
+            {
+                Message = "There are no students in this department!",
+                Status = false
+            };
+        }
+
+        var studentsByDepartmentDto = studentsByDepartment.Select(std => new StudentDto
+        {
+            Id = std.Id,
+            FirstName = std.FullName,
+            Email = std.Email,
+            DepartmentId = std.DepartmentId,
+            MatricNumber = std.MatricNumber,
+            DateOfCreation = std.DateOfCreation,
+
+        }).ToList();
+
+        return new BaseResponse<IList<StudentDto>>
+        {
+            Message = "Students successfully fetched!",
+            Status = true,
+            Data = studentsByDepartmentDto
+        };
     }
 
     private async Task<string> GenerateMatricNumber(Guid departmentId)

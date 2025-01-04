@@ -5,8 +5,10 @@ namespace StudentRegistration.DTOs;
 
 public class DepartmentDto
 {
+    public Guid Id { get; set; }
     public string DepartmentName { get; set; }
     public string DepartmentCode { get; set; }
+    public int? StudentCount { get; set; }
     public ICollection<StudentDto> Students { get; set; } = new List<StudentDto>();
     public DateTime DateOfCreation { get; set; }
 }
