@@ -17,5 +17,5 @@ public interface IStudentService
     
     public Task<BaseResponse<IList<StudentDto>>> GetAllStudents();
     
-    public Task<BaseResponse<IList<StudentDto>>> GetStudentsByDepartmentId(Guid departmentId);
+    public Task<BaseResponse<IList<StudentDto>>> GetStudentsByDepartment(Guid departmentId);
 }

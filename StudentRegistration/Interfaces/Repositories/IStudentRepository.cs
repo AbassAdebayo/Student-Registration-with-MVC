@@ -11,5 +11,5 @@ public interface IStudentRepository
     Task<Student> EditStudent(Student student);
     public Task<Student> GetStudentById(Guid studentId);
     public Task<IList<Student>> GetAllStudents();
-    public Task<IList<Student>> GetStudentsByDepartmentId(Guid departmentId);
+    public Task<IList<Student>> GetStudentsByDepartment(Guid departmentId);
 }

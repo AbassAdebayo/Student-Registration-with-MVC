@@ -59,7 +59,7 @@ public class StudentRepository : IStudentRepository
         return students;
     }
 
-    public async Task<IList<Student>> GetStudentsByDepartmentId(Guid departmentId)
+    public async Task<IList<Student>> GetStudentsByDepartment(Guid departmentId)
     {
         var students = await _studentContext.Students
             .Where(std => std.DepartmentId == departmentId)

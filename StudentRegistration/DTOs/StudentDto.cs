@@ -21,6 +21,7 @@ public class StudentDto
 
 public class CreateStudentRequestModel
 {
+    //public Guid DepartmentId { get; set; }
     [Required]
     [StringLength(maximumLength: 25, MinimumLength = 2)]
     public string FirstName { get; set; }

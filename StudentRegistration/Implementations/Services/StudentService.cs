@@ -200,9 +200,9 @@ public class StudentService : IStudentService
 
     }
 
-    public async Task<BaseResponse<IList<StudentDto>>> GetStudentsByDepartmentId(Guid departmentId)
+    public async Task<BaseResponse<IList<StudentDto>>> GetStudentsByDepartment(Guid departmentId)
     {
-        var studentsByDepartment = await _studentRepository.GetStudentsByDepartmentId(departmentId);
+        var studentsByDepartment = await _studentRepository.GetStudentsByDepartment(departmentId);
         if (studentsByDepartment is null || !studentsByDepartment.Any())
         {
             return new BaseResponse<IList<StudentDto>>
@@ -239,6 +239,8 @@ public class StudentService : IStudentService
         string departmentCode = department.DepartmentCode;
         string year = DateTime.Now.Year.ToString();
         int? count = department.StudentCount + 1;
+
+        department.UpdateDepartmentStudentCount(count);
         
         await _departmentRepository.EditDepartment(department);
 

@@ -7,4 +7,11 @@ public class Department : BaseEntity
     
     public int? StudentCount { get; set; }
     public ICollection<Student> Students { get; set; } = new List<Student>();
+
+
+    public void UpdateDepartmentStudentCount(int? studentCount)
+    {
+        StudentCount = studentCount;
+        
+    }
 }
