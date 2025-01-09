@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StudentRegistration.DTOs;
+using StudentRegistration.Entities;
 using StudentRegistration.Interfaces.Services;
 
 namespace StudentRegistration.Controllers;
@@ -25,8 +26,16 @@ public class StudentController : Controller
     [HttpGet]
     public async Task<IActionResult> AddStudent()
     {
-        var departments = await _departmentService.GetAllDepartments();
-        ViewData["Departments"] = new SelectList(departments.Data, "Id", "DepartmentName");
+        var departmentsResponse = await _departmentService.GetAllDepartments();
+        
+            var departments = departmentsResponse.Data ?? new List<DepartmentDto>();
+            ViewData["Departments"] = departments.Any()
+                ? new SelectList(departments, "Id", "DepartmentName")
+                : new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem { Value = "", Text = "No departments available", Disabled = true}
+                });   
+        
 
         return View();
     }
