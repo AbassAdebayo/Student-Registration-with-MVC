@@ -45,6 +45,7 @@ public class StudentService : IStudentService
             FullName = $"{model.FirstName} {model.LastName} {model.MiddleName}",
             Email = model.Email,
             Address = model.Address,
+            PhoneNumber = model.PhoneNumber,
             DepartmentId = departmentId,
             MatricNumber = await GenerateMatricNumber(departmentId),
             DateOfCreation = DateTime.UtcNow
@@ -238,13 +239,15 @@ public class StudentService : IStudentService
 
         string departmentCode = department.DepartmentCode;
         string year = DateTime.Now.Year.ToString();
-        int? count = department.StudentCount + 1;
+        
+        int currentCount = department.StudentCount ?? 0;
+        int newCount = currentCount + 1;
 
-        department.UpdateDepartmentStudentCount(count);
+        department.UpdateDepartmentStudentCount(newCount);
         
         await _departmentRepository.EditDepartment(department);
 
-        return $"{departmentCode}{year}{count:D3}";
+        return $"{departmentCode}{year}{newCount:D3}";
 
     }
 }

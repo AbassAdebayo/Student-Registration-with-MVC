@@ -19,7 +19,11 @@ public class DepartmentController : Controller
         return View(_departmentService.GetAllDepartments());
     }
     
-    
+    [HttpGet]
+    public IActionResult AddDepartment()
+    {
+        return View();
+    }
     [HttpPost]
     public async Task<IActionResult> AddDepartment(CreateDepartmentRequestModel model)
     {

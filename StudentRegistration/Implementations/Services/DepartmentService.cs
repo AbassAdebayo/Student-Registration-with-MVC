@@ -28,6 +28,7 @@ public class DepartmentService : IDepartmentService
         {
             DepartmentName = model.DepartmentName,
             DepartmentCode = model.DepartmentCode,
+            DateOfCreation = DateTime.UtcNow
 
         };
         var createDepartment = await _departmentRepository.CreateDepartment(newDepartment);
