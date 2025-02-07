@@ -42,7 +42,6 @@ public class StudentService : IStudentService
             FirstName = model.FirstName,
             LastName = model.LastName,
             MiddleName = model.MiddleName,
-            FullName = $"{model.FirstName} {model.LastName} {model.MiddleName}",
             Email = model.Email,
             Address = model.Address,
             PhoneNumber = model.PhoneNumber,
@@ -120,7 +119,6 @@ public class StudentService : IStudentService
         student.Email = model.Email;
         student.Address = model.Address;
         student.PhoneNumber = model.PhoneNumber;
-        student.FullName = $"{model.FirstName} {model.LastName} {model.MiddleName}";
         
         var updateStudent = await _studentRepository.EditStudent(student);
         if (updateStudent == null)
@@ -186,7 +184,7 @@ public class StudentService : IStudentService
             Id = std.Id,
             FirstName = std.FullName,
             Email = std.Email,
-            DepartmentId = std.DepartmentId,
+            DepartmentName = std.Department.DepartmentName,
             MatricNumber = std.MatricNumber,
             DateOfCreation = std.DateOfCreation,
 
@@ -218,7 +216,7 @@ public class StudentService : IStudentService
             Id = std.Id,
             FirstName = std.FullName,
             Email = std.Email,
-            DepartmentId = std.DepartmentId,
+            DepartmentName = std.Department.DepartmentName,
             MatricNumber = std.MatricNumber,
             DateOfCreation = std.DateOfCreation,
 

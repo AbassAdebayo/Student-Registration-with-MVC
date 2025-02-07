@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StudentRegistration.DTOs;
 using StudentRegistration.Interfaces.Services;
+using StudentRegistration.Models;
 
 namespace StudentRegistration.Controllers;
 
@@ -16,7 +17,13 @@ public class DepartmentController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        return View(_departmentService.GetAllDepartments());
+        var response = await _departmentService.GetAllDepartments();
+            
+        if(!response.Status) return View("Error", new ErrorViewModel
+        {
+            Message  = response.Message
+        });
+        return View(response.Data);
     }
     
     [HttpGet]
@@ -27,7 +34,11 @@ public class DepartmentController : Controller
     [HttpPost]
     public async Task<IActionResult> AddDepartment(CreateDepartmentRequestModel model)
     {
-        await _departmentService.CreateDepartment(model);
+        var response = await _departmentService.CreateDepartment(model);
+        if(!response.Status) return View("Error", new ErrorViewModel
+        {
+          Message  = response.Message
+        });
         
         return RedirectToAction("Index");
     }
@@ -35,11 +46,11 @@ public class DepartmentController : Controller
     [HttpGet]
     public async Task<IActionResult> EditDepartment(Guid departmentId)
     {
-        var department = await _departmentService.GetDepartmentById(departmentId);
-        if (department == null)
+        var response = await _departmentService.GetDepartmentById(departmentId);
+        if(!response.Status) return View("Error", new ErrorViewModel
         {
-            throw new Exception("Request unsuccessful!");
-        }
+            Message  = response.Message
+        });
 
         return View();
     }
@@ -47,7 +58,12 @@ public class DepartmentController : Controller
     [HttpPut]
     public async Task<IActionResult> EditDepartment(Guid departmentId, UpdateDepartmentRequestModel model)
     {
-        await _departmentService.EditDepartment(departmentId, model);
+        var response = await _departmentService.EditDepartment(departmentId, model);
+        
+        if(!response.Status) return View("Error", new ErrorViewModel
+        {
+            Message  = response.Message
+        });
         
         return RedirectToAction("Index");
     }
@@ -55,11 +71,12 @@ public class DepartmentController : Controller
     [HttpGet]
     public async Task<IActionResult> DeleteDepartment(Guid departmentId)
     {
-        var department = await _departmentService.GetDepartmentById(departmentId);
-        if (department == null)
+        var response = await _departmentService.GetDepartmentById(departmentId);
+        if(!response.Status) return View("Error", new ErrorViewModel
+            
         {
-            throw new Exception("Request unsuccessful!");
-        }
+            Message  = response.Message
+        });
 
         return View();
     }
@@ -67,7 +84,12 @@ public class DepartmentController : Controller
     [HttpDelete]
     public async Task<IActionResult> DeleteConfirmed(Guid departmentId)
     {
-        await _departmentService.DeleteDepartment(departmentId);
+        var response = await _departmentService.DeleteDepartment(departmentId);
+        
+        if(!response.Status) return View("Error", new ErrorViewModel
+        {
+            Message  = response.Message
+        });
         
         return RedirectToAction("Index");
     }
@@ -75,13 +97,14 @@ public class DepartmentController : Controller
     [HttpGet]
     public async Task<IActionResult> GetDepartment(Guid departmentId)
     {
-        var department = await _departmentService.GetDepartmentById(departmentId);
-        if (department == null)
+        var response = await _departmentService.GetDepartmentById(departmentId);
+        
+        if(!response.Status) return View("Error", new ErrorViewModel
         {
-            throw new Exception("Request unsuccessful!");
-        }
+            Message = response.Message
+        });
 
-        return View(department);
+        return View(response.Data);
     }
     
 }

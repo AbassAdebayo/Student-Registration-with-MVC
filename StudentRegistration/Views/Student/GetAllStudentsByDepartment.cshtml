@@ -1,0 +1,53 @@
+@model IEnumerable<StudentRegistration.DTOs.StudentDto>
+
+@{
+Layout = "~/Views/Shared/_UserLayout.cshtml";
+ViewData["Title"] = "Students";
+}
+
+@{
+    ViewData["Title"] = "Students in Department";
+}
+
+<div class="container">
+    <h2>Students in @ViewBag.DepartmentName</h2>
+
+    @if (!Model.Any())
+    {
+        <p>No students found for this department.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Email</th>
+                <th>Matric Number</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.FullName</td>
+                    <td>@student.Email</td>
+                    <td>@student.MatricNumber</td>
+                    <td>@ViewBag.DepartmentName</td>
+                    <td>@student.DateOfCreation.ToShortDateString()</td>
+                    <td>
+                        <!-- Add any desired action buttons here -->
+                        <a class="btn btn-primary" asp-action="EditStudent" asp-route-id="@student.Id">Edit</a>
+                        <a class="btn btn-danger" asp-action="DeleteStudent" asp-route-id="@student.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+
+<a asp-controller="Department" asp-action="Index" class="btn btn-secondary">Back to Departments</a>

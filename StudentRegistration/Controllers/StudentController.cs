@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using StudentRegistration.DTOs;
 using StudentRegistration.Entities;
 using StudentRegistration.Interfaces.Services;
+using StudentRegistration.Models;
 
 namespace StudentRegistration.Controllers;
 
@@ -20,7 +21,29 @@ public class StudentController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        return View(_studentService.GetAllStudents());
+       var studentResponse = await _studentService.GetAllStudents();
+       
+       if (!studentResponse.Status) return View("Error", new ErrorViewModel
+       {
+           Message = studentResponse.Message
+       });
+
+       // var studentDepartmentNames = new List<string>();
+       // foreach (var department in studentResponse.Data)
+       // {
+       //     var departmentResponse = await _departmentService.GetDepartmentById(department.DepartmentId);
+       //     
+       //     if (!departmentResponse.Status || departmentResponse.Data == null) return View("Error", new ErrorViewModel
+       //    {
+       //        Message = departmentResponse.Message ?? "Department not found."
+       //    });
+       //     studentDepartmentNames.Add(departmentResponse.Data.DepartmentName);
+       // }
+       //
+       ViewBag.DepartmentName = studentResponse.Data;
+
+       return View(studentResponse.Data);
+
     }
     
     [HttpGet]
@@ -89,19 +112,43 @@ public class StudentController : Controller
     [HttpGet]
     public async Task<IActionResult> GetStudent(Guid studentId)
     {
-        var student = await _studentService.GetStudentById(studentId);
-        if (student == null)
+        var studentResponse = await _studentService.GetStudentById(studentId);
+        
+        if (!studentResponse.Status) return View("Error", new ErrorViewModel
         {
-            throw new Exception("Request unsuccessful!");
-        }
+            Message = studentResponse.Message
+        });
+        var departmentResponse = await _departmentService.GetDepartmentById(studentResponse.Data.DepartmentId);
+        
+        if (!departmentResponse.Status) return View("Error", new ErrorViewModel
+        {
+            Message = departmentResponse.Message
+        });
+        ViewBag.DepartmentName = departmentResponse.Data.DepartmentName;
 
-        return View(student);
+        return View(studentResponse);
     }
     
     [HttpGet]
     public async Task<IActionResult> GetAllStudentsByDepartment(Guid departmentId)
     {
-        return View(_studentService.GetStudentsByDepartment(departmentId));
+
+        var studentResponse = await _studentService.GetStudentsByDepartment(departmentId);
+
+        if (!studentResponse.Status) return View("Error", new ErrorViewModel
+        {
+            Message = studentResponse.Message
+        });
+
+        var departmentResponse = await _departmentService.GetDepartmentById(departmentId);
+        
+        if (!departmentResponse.Status) return View("Error", new ErrorViewModel
+        {
+            Message = departmentResponse.Message
+        });
+        ViewBag.DepartmentName = departmentResponse.Data.DepartmentName;
+        
+        return View(studentResponse.Data);
     }
 
 }

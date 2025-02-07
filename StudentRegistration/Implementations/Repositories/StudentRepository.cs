@@ -53,6 +53,7 @@ public class StudentRepository : IStudentRepository
     public async Task<IList<Student>> GetAllStudents()
     {
         var students = await _studentContext.Students
+            .Include(std => std.Department)
             .AsNoTracking()
             .ToListAsync();
 
@@ -63,6 +64,7 @@ public class StudentRepository : IStudentRepository
     {
         var students = await _studentContext.Students
             .Where(std => std.DepartmentId == departmentId)
+            .Include(std => std.Department)
             .AsTracking()
             .ToListAsync();
 

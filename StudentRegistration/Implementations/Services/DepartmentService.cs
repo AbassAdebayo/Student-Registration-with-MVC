@@ -131,7 +131,6 @@ public class DepartmentService : IDepartmentService
             Students = department.Students.Select(std => new StudentDto
             {
                 Id = std.Id,
-                FullName = std.FullName,
                 Email = std.Email,
                 MatricNumber = std.MatricNumber,
                 DateOfCreation = std.DateOfCreation,
@@ -166,7 +165,6 @@ public class DepartmentService : IDepartmentService
             Students = dpt.Students.Select(std => new StudentDto
             {
                 Id = std.Id,
-                FullName = std.FullName,
                 Email = std.Email,
                 MatricNumber = std.MatricNumber,
                 DateOfCreation = std.DateOfCreation,
