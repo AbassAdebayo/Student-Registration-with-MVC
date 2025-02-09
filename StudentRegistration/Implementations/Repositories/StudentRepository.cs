@@ -62,11 +62,15 @@ public class StudentRepository : IStudentRepository
 
     public async Task<IList<Student>> GetStudentsByDepartment(Guid departmentId)
     {
+        Console.WriteLine($"Service received Department ID: {departmentId}");
+        
         var students = await _studentContext.Students
-            .Where(std => std.DepartmentId == departmentId)
+            .Where(std => std.DepartmentId.Equals(departmentId))
             .Include(std => std.Department)
-            .AsTracking()
+            .AsNoTracking()
             .ToListAsync();
+
+        Console.WriteLine($"Found {students.Count} students for Department ID: {departmentId}");
 
         return students;
     }

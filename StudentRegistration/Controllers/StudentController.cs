@@ -28,20 +28,6 @@ public class StudentController : Controller
            Message = studentResponse.Message
        });
 
-       // var studentDepartmentNames = new List<string>();
-       // foreach (var department in studentResponse.Data)
-       // {
-       //     var departmentResponse = await _departmentService.GetDepartmentById(department.DepartmentId);
-       //     
-       //     if (!departmentResponse.Status || departmentResponse.Data == null) return View("Error", new ErrorViewModel
-       //    {
-       //        Message = departmentResponse.Message ?? "Department not found."
-       //    });
-       //     studentDepartmentNames.Add(departmentResponse.Data.DepartmentName);
-       // }
-       //
-       ViewBag.DepartmentName = studentResponse.Data;
-
        return View(studentResponse.Data);
 
     }
@@ -129,26 +115,19 @@ public class StudentController : Controller
         return View(studentResponse);
     }
     
-    [HttpGet]
-    public async Task<IActionResult> GetAllStudentsByDepartment(Guid departmentId)
-    {
-
-        var studentResponse = await _studentService.GetStudentsByDepartment(departmentId);
-
-        if (!studentResponse.Status) return View("Error", new ErrorViewModel
-        {
-            Message = studentResponse.Message
-        });
-
-        var departmentResponse = await _departmentService.GetDepartmentById(departmentId);
-        
-        if (!departmentResponse.Status) return View("Error", new ErrorViewModel
-        {
-            Message = departmentResponse.Message
-        });
-        ViewBag.DepartmentName = departmentResponse.Data.DepartmentName;
-        
-        return View(studentResponse.Data);
-    }
+    // [HttpGet("department/{departmentId}")]
+    // public async Task<IActionResult> GetAllStudentsByDepartment(Guid departmentId)
+    // {
+    //
+    //     var studentResponse = await _studentService.GetStudentsByDepartment(departmentId);
+    //
+    //     if (studentResponse.Status) return View("Error", new ErrorViewModel
+    //     {
+    //         Message = studentResponse.Message
+    //     });
+    //     
+    //     
+    //     return View(studentResponse.Data);
+    // }
 
 }

@@ -8,12 +8,14 @@ namespace StudentRegistration.Controllers;
 public class DepartmentController : Controller
 {
     private readonly IDepartmentService _departmentService;
+    private readonly IStudentService _studentService;
 
-    public DepartmentController(IDepartmentService departmentService)
+    public DepartmentController(IDepartmentService departmentService, IStudentService studentService)
     {
         _departmentService = departmentService;
+        _studentService = studentService;
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -105,6 +107,28 @@ public class DepartmentController : Controller
         });
 
         return View(response.Data);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAllStudentsByDepartment(Guid? departmentId)
+    {
+        if (departmentId == null || departmentId == Guid.Empty)
+        {
+            return View("Error", new ErrorViewModel
+            {
+                Message = "Invalid Department ID."
+            });
+        }
+        
+        var studentResponse = await _studentService.GetStudentsByDepartment(departmentId.Value);
+
+        if (!studentResponse.Status) return View("Error", new ErrorViewModel
+        {
+            Message = studentResponse.Message
+        });
+        
+        
+        return View(studentResponse.Data);
     }
     
 }

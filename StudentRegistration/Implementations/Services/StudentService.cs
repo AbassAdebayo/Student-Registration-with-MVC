@@ -170,7 +170,7 @@ public class StudentService : IStudentService
     public async Task<BaseResponse<IList<StudentDto>>> GetAllStudents()
     {
         var students = await _studentRepository.GetAllStudents();
-        if (students is null || !students.Any())
+        if (!students.Any())
         {
             return new BaseResponse<IList<StudentDto>>
             {
@@ -182,7 +182,7 @@ public class StudentService : IStudentService
         var studentsDto = students.Select(std => new StudentDto
         {
             Id = std.Id,
-            FirstName = std.FullName,
+            FullName = std.FullName,
             Email = std.Email,
             DepartmentName = std.Department.DepartmentName,
             MatricNumber = std.MatricNumber,
@@ -202,26 +202,27 @@ public class StudentService : IStudentService
     public async Task<BaseResponse<IList<StudentDto>>> GetStudentsByDepartment(Guid departmentId)
     {
         var studentsByDepartment = await _studentRepository.GetStudentsByDepartment(departmentId);
-        if (studentsByDepartment is null || !studentsByDepartment.Any())
+        if (!studentsByDepartment.Any())
         {
             return new BaseResponse<IList<StudentDto>>
             {
                 Message = "There are no students in this department!",
-                Status = false
+                Status = false,
             };
         }
 
         var studentsByDepartmentDto = studentsByDepartment.Select(std => new StudentDto
         {
             Id = std.Id,
-            FirstName = std.FullName,
+            FullName = std.FullName,
             Email = std.Email,
+            DepartmentId = std.DepartmentId,
             DepartmentName = std.Department.DepartmentName,
             MatricNumber = std.MatricNumber,
             DateOfCreation = std.DateOfCreation,
 
         }).ToList();
-
+        
         return new BaseResponse<IList<StudentDto>>
         {
             Message = "Students successfully fetched!",

@@ -18,7 +18,14 @@ public class StudentDto
     public string DepartmentName { get; set; }
     public DateTime DateOfCreation { get; set; }
     
-    public string FullName => $"{FirstName} {LastName} | {MiddleName}";
+    public string Name { get; set; }
+
+    private string _fullName;
+    public string FullName
+    {
+        get => _fullName?? $"{FirstName} {LastName} {MiddleName}".Trim(); 
+        set => _fullName = value;
+    }
 }
 
 public class CreateStudentRequestModel
