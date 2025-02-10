@@ -17,13 +17,11 @@ public class StudentDto
     public Department Department { get; set; }
     public string DepartmentName { get; set; }
     public DateTime DateOfCreation { get; set; }
-    
-    public string Name { get; set; }
 
     private string _fullName;
     public string FullName
     {
-        get => _fullName?? $"{FirstName} {LastName} {MiddleName}".Trim(); 
+        get => _fullName?? $"{FirstName} {LastName} {MiddleName}"; 
         set => _fullName = value;
     }
 }
