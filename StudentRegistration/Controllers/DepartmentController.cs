@@ -110,23 +110,14 @@ public class DepartmentController : Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAllStudentsByDepartment(Guid? departmentId)
+    public async Task<IActionResult> GetAllStudentsByDepartment(Guid departmentId)
     {
-        if (departmentId == null || departmentId == Guid.Empty)
-        {
-            return View("Error", new ErrorViewModel
-            {
-                Message = "Invalid Department ID."
-            });
-        }
-        
-        var studentResponse = await _studentService.GetStudentsByDepartment(departmentId.Value);
+        var studentResponse = await _studentService.GetStudentsByDepartment(departmentId);
 
         if (!studentResponse.Status) return View("Error", new ErrorViewModel
         {
             Message = studentResponse.Message
         });
-        
         
         return View(studentResponse.Data);
     }

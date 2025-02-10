@@ -65,7 +65,7 @@ public class StudentRepository : IStudentRepository
         Console.WriteLine($"Service received Department ID: {departmentId}");
         
         var students = await _studentContext.Students
-            .Where(std => std.DepartmentId.Equals(departmentId))
+            .Where(std => std.DepartmentId == departmentId)
             .Include(std => std.Department)
             .AsNoTracking()
             .ToListAsync();

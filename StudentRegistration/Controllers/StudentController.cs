@@ -115,19 +115,6 @@ public class StudentController : Controller
         return View(studentResponse);
     }
     
-    // [HttpGet("department/{departmentId}")]
-    // public async Task<IActionResult> GetAllStudentsByDepartment(Guid departmentId)
-    // {
-    //
-    //     var studentResponse = await _studentService.GetStudentsByDepartment(departmentId);
-    //
-    //     if (studentResponse.Status) return View("Error", new ErrorViewModel
-    //     {
-    //         Message = studentResponse.Message
-    //     });
-    //     
-    //     
-    //     return View(studentResponse.Data);
-    // }
+    
 
 }
