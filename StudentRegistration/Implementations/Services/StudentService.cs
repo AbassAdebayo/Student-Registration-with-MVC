@@ -175,7 +175,8 @@ public class StudentService : IStudentService
             return new BaseResponse<IList<StudentDto>>
             {
                 Message = "Students are empty!",
-                Status = false
+                Status = false,
+                Data = new List<StudentDto>()
             };
         }
 
@@ -208,6 +209,7 @@ public class StudentService : IStudentService
             {
                 Message = "There are no students in this department!",
                 Status = false,
+                Data = new List<StudentDto>()
             };
         }
 

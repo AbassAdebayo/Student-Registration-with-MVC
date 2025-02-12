@@ -160,7 +160,7 @@ public class DepartmentService : IDepartmentService
             Id = dpt.Id,
             DepartmentName = dpt.DepartmentName,
             DepartmentCode = dpt.DepartmentCode,
-            StudentCount = dpt.StudentCount,
+            StudentCount = dpt.StudentCount ?? 0,
             DateOfCreation = dpt.DateOfCreation,
             Students = dpt.Students.Select(std => new StudentDto
             {

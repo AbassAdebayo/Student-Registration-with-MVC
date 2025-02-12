@@ -114,10 +114,10 @@ public class DepartmentController : Controller
     {
         var studentResponse = await _studentService.GetStudentsByDepartment(departmentId);
 
-        if (!studentResponse.Status) return View("Error", new ErrorViewModel
+        if (!studentResponse.Status) 
         {
-            Message = studentResponse.Message
-        });
+            ViewBag.Message = studentResponse.Message;
+        }
         
         return View(studentResponse.Data);
     }
